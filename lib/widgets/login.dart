@@ -25,6 +25,15 @@ class _LoginState extends State<Login> {
         if (err.exception == 'NOT_AUTHORIZED') {
           return err.detail;
         }
+
+        if (err.exception == 'INVALID_STATE') {
+          if (err.detail.contains('already a user which is signed in')) {
+            await Amplify.Auth.signOut();
+            return 'Problem logging in. Please try again.';
+          }
+
+          return err.detail;
+        }
       }
 
       return 'There was a problem signing up. Please try again.';
@@ -76,7 +85,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: 'AmpAwesome',
+      title: 'Welcome',
       onLogin: _onLogin,
       onRecoverPassword: (String email) => _onRecoverPassword(context, email),
       onSignup: _onSignup,
