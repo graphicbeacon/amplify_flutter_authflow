@@ -3,18 +3,20 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-class ConfirmScreen extends StatefulWidget {
+class ConfirmResetScreen extends StatefulWidget {
   final LoginData data;
 
-  ConfirmScreen({@required this.data});
+  ConfirmResetScreen({@required this.data});
 
   @override
-  _ConfirmScreenState createState() => _ConfirmScreenState();
+  _ConfirmResetScreenState createState() => _ConfirmResetScreenState();
 }
 
-class _ConfirmScreenState extends State<ConfirmScreen> {
+class _ConfirmResetScreenState extends State<ConfirmResetScreen> {
   final _controller = TextEditingController();
+  final _newPasswordController = TextEditingController();
   bool _isEnabled = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -24,24 +26,33 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
         _isEnabled = _controller.text.isNotEmpty;
       });
     });
+    _newPasswordController.addListener(() {
+      setState(() {
+        _isEnabled = _controller.text.isNotEmpty;
+      });
+    });
   }
 
-  void _verifyCode(BuildContext context, LoginData data, String code) async {
+  void _resetPassword(BuildContext context, LoginData data, String code,
+      String password) async {
     try {
-      final res = await Amplify.Auth.confirmSignUp(
+      final res = await Amplify.Auth.confirmPassword(
         username: data.name,
+        newPassword: password,
         confirmationCode: code,
       );
 
-      if (res.isSignUpComplete) {
-        // Login user
-        final user = await Amplify.Auth.signIn(
-            username: data.name, password: data.password);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            'Password changed successfully. Please log in',
+            style: TextStyle(fontSize: 15),
+          ),
+        ),
+      );
 
-        if (user.isSignedIn) {
-          Navigator.pushReplacementNamed(context, '/dashboard');
-        }
-      }
+      Navigator.of(context).pushReplacementNamed('/');
     } on AuthError catch (e) {
       for (final err in e.exceptionList) {
         if (err.exception == 'CODE_MISMATCH') {
@@ -50,22 +61,6 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
         }
       }
 
-      _showError(context, e.cause);
-    }
-  }
-
-  void _resendCode(BuildContext context, LoginData data) async {
-    try {
-      await Amplify.Auth.resendSignUpCode(username: data.name);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.blueAccent,
-          content: Text('Confirmation code resent. Check your email',
-              style: TextStyle(fontSize: 15)),
-        ),
-      );
-    } on AuthError catch (e) {
       _showError(context, e.cause);
     }
   }
@@ -85,6 +80,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    _newPasswordController.dispose();
     super.dispose();
   }
 
@@ -109,6 +105,33 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                     children: [
                       SizedBox(height: 10),
                       TextField(
+                        controller: _newPasswordController,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          filled: true,
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 4.0),
+                          prefixIcon: Icon(Icons.lock),
+                          labelText: 'Enter new password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(40)),
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
                         controller: _controller,
                         decoration: InputDecoration(
                           filled: true,
@@ -125,8 +148,12 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                       MaterialButton(
                         onPressed: _isEnabled
                             ? () {
-                                _verifyCode(
-                                    context, widget.data, _controller.text);
+                                _resetPassword(
+                                  context,
+                                  widget.data,
+                                  _controller.text,
+                                  _newPasswordController.text,
+                                );
                               }
                             : null,
                         elevation: 4,
@@ -136,22 +163,13 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                         child: Text(
-                          'VERIFY',
+                          'RESET',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                           ),
                         ),
                       ),
-                      MaterialButton(
-                        onPressed: () {
-                          _resendCode(context, widget.data);
-                        },
-                        child: Text(
-                          'Resend code',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      )
                     ],
                   ),
                 ),
