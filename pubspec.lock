@@ -21,14 +21,14 @@ packages:
       name: amplify_analytics_plugin_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-dev.6"
+    version: "0.0.2-dev.1"
   amplify_api_plugin_interface:
     dependency: transitive
     description:
       name: amplify_api_plugin_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-dev.6"
+    version: "0.0.2-dev.1"
   amplify_auth_cognito:
     dependency: "direct main"
     description:
@@ -42,35 +42,35 @@ packages:
       name: amplify_auth_plugin_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-dev.6"
+    version: "0.0.2-dev.1"
   amplify_core:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: amplify_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-dev.6"
-  amplify_core_plugin_interface:
-    dependency: transitive
-    description:
-      name: amplify_core_plugin_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1-dev.6"
+    version: "0.0.2-dev.1"
   amplify_datastore_plugin_interface:
     dependency: transitive
     description:
       name: amplify_datastore_plugin_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-dev.6"
+    version: "0.0.2-dev.1"
+  amplify_flutter:
+    dependency: "direct main"
+    description:
+      name: amplify_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2-dev.1"
   amplify_storage_plugin_interface:
     dependency: transitive
     description:
       name: amplify_storage_plugin_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1-dev.6"
+    version: "0.0.2-dev.1"
   analyzer:
     dependency: transitive
     description:

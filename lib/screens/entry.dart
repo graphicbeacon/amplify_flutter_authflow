@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:amplify_core/amplify_core.dart';
+import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 
@@ -12,7 +12,6 @@ class EntryScreen extends StatefulWidget {
 }
 
 class _EntryScreenState extends State<EntryScreen> {
-  final amplify = Amplify();
   bool _amplifyConfigured = false;
 
   @override
@@ -22,13 +21,12 @@ class _EntryScreenState extends State<EntryScreen> {
   }
 
   void _configureAmplify() async {
-    final auth = AmplifyAuthCognito();
-    final analytics = AmplifyAnalyticsPinpoint();
 
     try {
-      amplify.addPlugin(authPlugins: [auth], analyticsPlugins: [analytics]);
+      Amplify.addPlugin(AmplifyAuthCognito());
+      Amplify.addPlugin(AmplifyAnalyticsPinpoint());
 
-      await amplify.configure(amplifyconfig);
+      await Amplify.configure(amplifyconfig);
 
       setState(() {
         _amplifyConfigured = true;
