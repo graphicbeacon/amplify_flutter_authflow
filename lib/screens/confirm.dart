@@ -42,15 +42,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
           Navigator.pushReplacementNamed(context, '/dashboard');
         }
       }
-    } on AuthError catch (e) {
-      for (final err in e.exceptionList) {
-        if (err.exception == 'CODE_MISMATCH') {
-          _showError(context, err.detail);
-          return null;
-        }
-      }
-
-      _showError(context, e.cause);
+    } on AuthException catch (e) {
+      _showError(context, e.message);
     }
   }
 
@@ -65,8 +58,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
               style: TextStyle(fontSize: 15)),
         ),
       );
-    } on AuthError catch (e) {
-      _showError(context, e.cause);
+    } on AuthException catch (e) {
+      _showError(context, e.message);
     }
   }
 

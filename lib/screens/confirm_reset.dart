@@ -53,15 +53,8 @@ class _ConfirmResetScreenState extends State<ConfirmResetScreen> {
       );
 
       Navigator.of(context).pushReplacementNamed('/');
-    } on AuthError catch (e) {
-      for (final err in e.exceptionList) {
-        if (err.exception == 'CODE_MISMATCH') {
-          _showError(context, err.detail);
-          return null;
-        }
-      }
-
-      _showError(context, e.cause);
+    } on AuthException catch (e) {
+      _showError(context, '${e.message} - ${e.underlyingException}');
     }
   }
 

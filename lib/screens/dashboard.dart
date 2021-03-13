@@ -18,7 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _user = user;
       });
     }).catchError((error) {
-      print((error as AuthError).cause);
+      print((error as AuthException).message);
     });
   }
 

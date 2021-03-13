@@ -1,25 +1,26 @@
 PODS:
   - Amplify (1.5.3):
     - Amplify/Default (= 1.5.3)
+  - Amplify/Default (1.5.3)
   - amplify_analytics_pinpoint (0.0.1):
     - Amplify
+    - amplify_core
     - AmplifyPlugins/AWSPinpointAnalyticsPlugin
     - Flutter
   - amplify_auth_cognito (0.0.1):
     - Amplify
+    - amplify_core
     - AmplifyPlugins/AWSCognitoAuthPlugin
     - Flutter
     - ObjectMapper
   - amplify_core (0.0.1):
+    - Flutter
+  - amplify_flutter (0.0.1):
     - Amplify
-    - AmplifyPlugins/AWSAPIPlugin
+    - amplify_core
     - AmplifyPlugins/AWSCognitoAuthPlugin
     - AWSPluginsCore
     - Flutter
-  - AmplifyPlugins/AWSAPIPlugin (1.5.3):
-    - AppSyncRealTimeClient (~> 1.4.0)
-    - AWSCore (~> 2.22.0)
-    - AWSPluginsCore (= 1.5.3)
   - AmplifyPlugins/AWSCognitoAuthPlugin (1.5.3):
     - AWSAuthCore (~> 2.22.0)
     - AWSCognitoIdentityProvider (~> 2.22.0)
@@ -31,8 +32,6 @@ PODS:
     - AWSCore (~> 2.22.0)
     - AWSPinpoint (~> 2.22.0)
     - AWSPluginsCore (= 1.5.3)
-  - AppSyncRealTimeClient (1.4.2):
-    - Starscream (~> 3.1.0)
   - AWSAuthCore (2.22.0):
     - AWSCore (= 2.22.0)
   - AWSCognitoIdentityProvider (2.22.0):
@@ -54,12 +53,12 @@ PODS:
   - integration_test (0.0.1):
     - Flutter
   - ObjectMapper (4.2.0)
-  - Starscream (3.1.1)
 
 DEPENDENCIES:
   - amplify_analytics_pinpoint (from `.symlinks/plugins/amplify_analytics_pinpoint/ios`)
   - amplify_auth_cognito (from `.symlinks/plugins/amplify_auth_cognito/ios`)
   - amplify_core (from `.symlinks/plugins/amplify_core/ios`)
+  - amplify_flutter (from `.symlinks/plugins/amplify_flutter/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
 
@@ -67,7 +66,6 @@ SPEC REPOS:
   trunk:
     - Amplify
     - AmplifyPlugins
-    - AppSyncRealTimeClient
     - AWSAuthCore
     - AWSCognitoIdentityProvider
     - AWSCognitoIdentityProviderASF
@@ -76,7 +74,6 @@ SPEC REPOS:
     - AWSPinpoint
     - AWSPluginsCore
     - ObjectMapper
-    - Starscream
 
 EXTERNAL SOURCES:
   amplify_analytics_pinpoint:
@@ -85,6 +82,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplify_auth_cognito/ios"
   amplify_core:
     :path: ".symlinks/plugins/amplify_core/ios"
+  amplify_flutter:
+    :path: ".symlinks/plugins/amplify_flutter/ios"
   Flutter:
     :path: Flutter
   integration_test:
@@ -92,11 +91,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Amplify: 48c0d81972469bec6743685f1fae6e34b1ad29f9
-  amplify_analytics_pinpoint: ed8e72e7c27d1ccd525eeba1b76c8b9487cb8ac7
-  amplify_auth_cognito: 21e6e4acd861653d73875ee7d8ddce1a404e23cf
-  amplify_core: 0423f1ba3b97affd7ce84dc02fae327ce9be8473
+  amplify_analytics_pinpoint: df3010eb49161ada82712a6b74d3f77296ac561e
+  amplify_auth_cognito: 2e090a788d0ba4e08f6438170b1e7aac872782b4
+  amplify_core: 8b38d20089fe4f225c14db6892f586bd03824a42
+  amplify_flutter: d64b45e3a016e491bbb2e110fee57e150daf2164
   AmplifyPlugins: fcbe0f03d980db2f31b7d5bcf580092dfe4931a3
-  AppSyncRealTimeClient: 7fb160294d067b6c0c4b3c4ab91e953fd4cfba30
   AWSAuthCore: b54e2008da479e5a6ffdb6b482821d8f5a9afaa4
   AWSCognitoIdentityProvider: 32a91ad644e49e40235a408a8fbb96ea74891f19
   AWSCognitoIdentityProviderASF: 8b92721c17f2951ecd5bcfb749d5534f2851c2c7
@@ -107,8 +106,7 @@ SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
-  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
 
-PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
+PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
 COCOAPODS: 1.10.1

@@ -6,7 +6,11 @@ import 'screens/confirm.dart';
 import 'screens/confirm_reset.dart';
 import 'screens/dashboard.dart';
 
-void main() {
+import 'helpers/configure_amplify.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureAmplify();
   runApp(MyApp());
 }
 

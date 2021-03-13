@@ -20,23 +20,13 @@ class _LoginState extends State<Login> {
       );
 
       _isSignedIn = res.isSignedIn;
-    } on AuthError catch (e) {
-      for (final err in e.exceptionList) {
-        if (err.exception == 'NOT_AUTHORIZED') {
-          return err.detail;
-        }
-
-        if (err.exception == 'INVALID_STATE') {
-          if (err.detail.contains('already a user which is signed in')) {
-            await Amplify.Auth.signOut();
-            return 'Problem logging in. Please try again.';
-          }
-
-          return err.detail;
-        }
+    } on AuthException catch (e) {
+      if (e.message.contains('already a user which is signed in')) {
+        await Amplify.Auth.signOut();
+        return 'Problem logging in. Please try again.';
       }
 
-      return 'There was a problem signing up. Please try again.';
+      return '${e.message} - ${e.recoverySuggestion}';
     }
   }
 
@@ -50,13 +40,8 @@ class _LoginState extends State<Login> {
           arguments: LoginData(name: email, password: ''),
         );
       }
-    } on AuthError catch (e) {
-      for (final err in e.exceptionList) {
-        if (err.exception == 'INVALID_PARAMETER') {
-          return err.detail;
-        }
-      }
-      return e.cause;
+    } on AuthException catch (e) {
+      return '${e.message} - ${e.recoverySuggestion}';
     }
   }
 
@@ -71,14 +56,8 @@ class _LoginState extends State<Login> {
       );
 
       _data = data;
-    } on AuthError catch (e) {
-      for (final err in e.exceptionList) {
-        if (err.exception == 'USERNAME_EXISTS') {
-          return err.detail;
-        }
-      }
-
-      return 'There was a problem signing up. Please try again.';
+    } on AuthException catch (e) {
+      return '${e.message} - ${e.recoverySuggestion}';
     }
   }
 
