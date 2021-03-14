@@ -1,3 +1,4 @@
+import 'package:amp_awesome/widgets/login.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
@@ -28,17 +29,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: Text('Dashboard'),
         actions: [
-          MaterialButton(
-            onPressed: () {
-              Amplify.Auth.signOut().then((_) {
-                Navigator.pushReplacementNamed(context, '/');
-              });
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            tooltip: 'Logout',
+            onPressed: () async {
+              try {
+                Amplify.Auth.signOut();
+                Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Login()));
+              } on AuthError catch (e) {
+                print(e);
+              }
             },
-            child: Icon(
-              Icons.logout,
-              color: Colors.white,
-            ),
-          )
+            color: Colors.white,
+          ),
         ],
       ),
       body: Container(
